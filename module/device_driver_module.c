@@ -45,10 +45,17 @@ ssize_t test_device_driver_write(struct file *inode, const char *gdata, size_t l
 }
 
 ssize_t test_device_driver_read(struct file *inode, char *u_gdata, size_t length, loff_t *off_what){
-    char tmp = 93;
+    char tmp = 0;
+    tmp += number % 10;
+    number /= 10;
+    tmp += number % 10;
+    number /= 10;
+    tmp += number % 10;
+    number /= 10;
+    tmp += number % 10;
 
     printk("Read\n");
-    if (copy_to_user(u_gdata, tmp, 1)) {
+    if (copy_to_user(u_gdata, &tmp, 1)) {
         return -EFAULT;
     }
     
